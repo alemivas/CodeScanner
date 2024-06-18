@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
         } else {
             Toast.makeText(
                 this,
-                "Scan data: ${result.contents}", Toast.LENGTH_SHORT
+                "Scan data: ${result.contents}", Toast.LENGTH_LONG
             ).show()
         }
     }
