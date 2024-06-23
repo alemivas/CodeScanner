@@ -7,42 +7,42 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.AP
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.codescaner.data.MainDB
-import com.example.codescaner.data.NameEntity
+import com.example.codescaner.data.CodeEntity
 import kotlinx.coroutines.launch
 
 class MainViewModel(val database: MainDB): ViewModel() {
 
 //    val itemsList = database.dao.getAllItems()
-    val newText = mutableStateOf("")
-    var nameEntity: NameEntity? = null
+//    val newText = mutableStateOf("")
+//    var codeEntity: CodeEntity? = null
 
 //    fun insertItem() = viewModelScope.launch {
-//        val nameItem = nameEntity?.copy(name = newText.value)
-//            ?: NameEntity(name = newText.value)
+//        val nameItem = codeEntity?.copy(name = newText.value)
+//            ?: CodeEntity(name = newText.value)
 //        database.dao.insertItem(nameItem)
-//        nameEntity = null
+//        codeEntity = null
 //        newText.value = ""
 //    }
-    fun insertItem() = viewModelScope.launch {
-        val nameItem = NameEntity(name = "ghgfhfgh")
-        database.dao.insertItem(nameItem)
-        nameEntity = null
-        newText.value = ""
-    }
+//    fun insertItem() = viewModelScope.launch {
+//        val nameItem = CodeEntity(name = "ghgfhfgh")
+//        database.dao.insertItem(nameItem)
+//        codeEntity = null
+//        newText.value = ""
+//    }
 
-//    fun deleteItem(item: NameEntity) = viewModelScope.launch {
+//    fun deleteItem(item: CodeEntity) = viewModelScope.launch {
 //        database.dao.deleteItem(item)
 //    }
 
-    companion object{
-        val factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory{
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(
-                modelClass: Class<T>,
-                extras: CreationExtras): T {
-                val database = (checkNotNull(extras[APPLICATION_KEY]) as App).database
-                return MainViewModel(database) as T
-            }
-        }
-    }
+//    companion object{
+//        val factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory{
+//            @Suppress("UNCHECKED_CAST")
+//            override fun <T : ViewModel> create(
+//                modelClass: Class<T>,
+//                extras: CreationExtras): T {
+//                val database = (checkNotNull(extras[APPLICATION_KEY]) as App).database
+//                return MainViewModel(database) as T
+//            }
+//        }
+//    }
 }

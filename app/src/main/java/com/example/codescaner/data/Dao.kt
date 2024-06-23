@@ -3,16 +3,15 @@ package com.example.codescaner.data
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
-import com.example.codescaner.data.NameEntity
 
 @Dao
 interface Dao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertItem(nameEntity: NameEntity)
+    suspend fun insertItem(codeEntity: CodeEntity)
 
 //    @Delete
-//    suspend fun deleteItem(nameEntity: NameEntity)
+//    suspend fun deleteItem(codeEntity: CodeEntity)
 //
-//    @Query("SELECT * FROM name_table")
-//    fun getAllItems(): Flow<List<NameEntity>>
+//    @Query("SELECT * FROM code_table")
+//    fun getAllItems(): Flow<List<CodeEntity>>
 }

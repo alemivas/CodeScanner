@@ -3,9 +3,9 @@ package com.example.codescaner.data
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "name_table")
-data class NameEntity(
+@Entity(tableName = "code_table")
+data class CodeEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
-    val name: String
+    val code: String
 )

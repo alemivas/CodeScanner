@@ -34,9 +34,9 @@ import com.journeyapps.barcodescanner.ScanOptions
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(
-    mainViewModel: MainViewModel = viewModel(factory = MainViewModel.factory)
+//    mainViewModel: MainViewModel = viewModel(factory = MainViewModel.factory)
 ) {
-    mainViewModel.insertItem()
+//    mainViewModel.insertItem()
 //    val itemsList = mainViewModel.itemsList.collectAsState(initial = emptyList())
 
 //    Box(

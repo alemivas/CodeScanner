@@ -10,9 +10,12 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.codescaner.data.CodeEntity
+import com.example.codescaner.data.MainDB
 import com.example.codescaner.ui.MainScreen
 //import androidx.lifecycle.viewmodel.compose.viewModel
 //import com.example.codescaner.ui.MainScreen
@@ -20,18 +23,37 @@ import com.example.codescaner.ui.MainScreen
 import com.example.codescaner.ui.theme.CodeScanerTheme
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-//    @get:Composable
-    /*private*/ val scanLauncher = registerForActivityResult(
+    @Inject
+    lateinit var mainDB: MainDB
+
+    private val scanLauncher = registerForActivityResult(
         ScanContract()
     ) { result ->
         if (result.contents == null) {
-
-        } else {
             Toast.makeText(
                 this,
-                "Scan data: ${result.contents}", Toast.LENGTH_LONG
+                "Scan data is null!", Toast.LENGTH_LONG
+            ).show()
+        } else {
+            CoroutineScope(Dispatchers.IO).launch {
+                mainDB.dao.insertItem(
+                    CodeEntity(
+                        id = null,
+                        code = result.contents
+                    )
+                )
+            }
+            Toast.makeText(
+                this,
+                "Item saved!", Toast.LENGTH_LONG
             ).show()
 //            @Composable
 //            @get:Composable
@@ -41,10 +63,11 @@ class MainActivity : ComponentActivity() {
 //            test()
 //            val mainViewModel: MainViewModel = viewModel(factory = MainViewModel.factory)
 //            mainViewModel.insertItem()
+
         }
     }
 
-    /*private */fun scan() {
+    private fun scan() {
         val options = ScanOptions()
 //        options.setDesiredBarcodeFormats(ScanOptions.ONE_D_CODE_TYPES)
         options.setDesiredBarcodeFormats(ScanOptions.ALL_CODE_TYPES)
@@ -58,6 +81,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+
+//            val coroutineScope = rememberCoroutineScope()
+
             CodeScanerTheme {
                 Box(
                     modifier = Modifier.fillMaxSize(),
@@ -66,6 +92,14 @@ class MainActivity : ComponentActivity() {
                     Button(
                         onClick = {
                             scan()
+//                            coroutineScope.launch {
+//                                mainDB.dao.insertItem(
+//                                    CodeEntity(
+//                                        id = null,
+//                                        code = "fsxfdsd"
+//                                    )
+//                                )
+//                            }
                         }
                     ) {
                         Text(text = "Scan")
@@ -75,29 +109,3 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
-////@OptIn(ExperimentalMaterial3Api::class)
-//@Composable
-//fun MainScreen(
-//    mainViewModel: MainViewModel = viewModel(factory = MainViewModel.factory)
-//) {
-////    val itemsList = mainViewModel.itemsList.collectAsState(initial = emptyList())
-//
-//    Box(
-//        modifier = Modifier.fillMaxSize(),
-//        contentAlignment = Alignment.Center
-//    ) {
-//        Button(
-//            onClick = {
-//                scan()
-//            }
-//        ) {
-//            Text(text = "Scan")
-//        }
-//    }
-//}
-
-//@Composable
-//fun WrapperFun() {
-//    MainScreen()
-//}
